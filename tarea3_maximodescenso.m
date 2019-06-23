@@ -12,43 +12,29 @@ x = linspace(-1,5,N);
 y = linspace(-5,1,N);
 [X,Y] = meshgrid(x,y);
 
-% evaluando funcion: f(x) = <Ax-b;Ax-b>
-X = reshape(X,N^2,1);
-Y = reshape(Y,N^2,1);
-Z11 = A(1,1)*X + A(1,2)*Y - b(1);
-Z12 = A(2,1)*X + A(2,2)*Y - b(2);
-Z1 = Z11.^2 + Z12.^2;
-Z1 = reshape(Z1,N,N);
-X = reshape(X,N,N);
-Y = reshape(Y,N,N);
-% graficando funcion f 
-figure(1)
-surf(X,Y,Z1)
-% graficando curvas de nivel de f y vector gradiente en distintos
-% puntos del dominio de f
-figure(2)
-hold on
-contour(x,y,Z1,100)
-[u,v] = gradient(Z1);
-quiver(x,y,2*u,2*v);
-axis([-1 5 -5 1])
+% Ejercicio 1. Si z = (x,y), evalue f(z) = <Az-b;Az-b> y muestre el grafico
+% de f y sus curvas de nivel (en figuras diferentes). 
+% En el grafico de las curvas de nivel muestre el vector gradiente 
+% de f evaluado en distintos puntos.
 
-% solucion exacta al sistema de ecuaciones
-% para comprobar que las iteraciones del metodo de maximo
-% descenso se acercan a ella
+% Mostrando la solucion exacta al
+% sistema de ecuaciones en el grafico con curvas de nivel de f. 
+% Esto se hace para comprobar, graficamente, que las iteraciones 
+% del metodo de maximo descenso se acercan a ella
 sol = A\b;
 % se muestra solucion exacta con un asterisco rojo
 plot(sol,'r*')
 
+
 % valor inicial para metodo de maximo descenso
 x0 = [0;0];
-% se muestra valor de f en x0 para comprobar que 
+% se muestra en pantalla el valor de f en x0 para comprobar que 
 % en cada iteracion del metodo de maximo descenso
 % este valor disminuye
 disp(['iteracion 0'])
 (norm(A*x0-b))^2
 
-% mostrando aproximacion inicial como un asterisco rojo
+% mostrando aproximacion inicial como un asterisco negro
 plot(x0(1),x0(2),'k*')
 
 % las aproximaciones sucesivas del metodo de maximo descenso
@@ -60,12 +46,13 @@ colors = {'bs','gs','bo','go','bd','gd'};
 % colores con que se mostraran en colors
 for i = 1 : 6
     % un paso de metodo de maximo descenso
-    % calcular nuevo valor de x0
-    % en cada paso mostrar en la figura 2:
-    % 1. direccion de descenso (-gradiente en x0) desde x0
-    % para mostrar esto basta hacer
+    % Ejercicio 2: calcular nuevo valor de x0 segun metodo de maximo
+    % descenso
+    % Ejercicio 3: Mostrar en la figura 2:
+    % 3.1. direccion de descenso (-gradiente de f en x0) desde x0
+    % para mostrar esto basta hacer 
     % quiver(x0(1),x0(2),direccion(1),direccion(2))
-    % 2. nueva aproximacion x0
+    % 3.2. nueva aproximacion x0
     % para hacer esto basta hacer plot(x0(1),x0(2),colors{i})
     display(['iteracion: ',num2str(i)]);
     (norm(A*x0-b))^2
